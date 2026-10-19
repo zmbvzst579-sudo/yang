@@ -622,52 +622,55 @@ a{color:inherit;text-decoration:none;}
 .bio-loc span{color:var(--ink-3);}
 .bio-loc b{color:#fff;letter-spacing:.1em;font-weight:600;}
 
-/* ============ chips ============ */
-.chips{
-  display:flex;flex-wrap:wrap;align-items:center;
-  gap:0;
-  margin-top:10px;
-  line-height:2.4;
+/* ===== 无限符号 3D 轮播 ===== */
+.infinity-stage {
+  position: relative;
+  height: 110px; /* 高度压扁 */
+  margin-top: 0px;
+  perspective: 800px; 
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
 }
-.chips:first-child{margin-top:0;}
-.chips span{
-  font-size:12.5px;
-  letter-spacing:.1em;
-  padding:2px 0;
-  background:none;border:0;border-radius:0;
-  color:var(--ink-2);
-  display:inline-block;
-  vertical-align:middle;
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  transition:color .35s ease, transform .35s cubic-bezier(.34,1.56,.64,1), text-shadow .35s ease;
-  will-change:transform;
+.infinity-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
 }
-.chips span + span::before{
-  content:'·';
-  margin:0 .8em 0 .5em;
-  color:rgba(255,255,255,.16);
-  font-weight:400;
-  display:inline-block;
-  transition:color .35s ease;
+.infinity-ring span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-family: var(--serif-tc);
+  font-size: 14px;
+  font-weight: 500; 
+  color: #F2F0ED;
+  white-space: nowrap;
+  letter-spacing: .15em;
+  margin: -10px -20px;
+  transform-origin: 50% 50%;
+  transition: color .3s ease, font-weight .3s ease;
+  cursor: pointer;
+  will-change: transform, opacity, filter;
 }
-@media (hover: hover){
-  .chips span:hover{
-    color:#fff;
-    transform:translateY(-2px);
-    text-shadow:0 0 10px rgba(255,255,255,.75), 0 0 22px rgba(255,255,255,.4);
-  }
-  .chips span:hover::before{
-    color:rgba(255,255,255,.4);
-  }
+.infinity-ring span:hover {
+  color: var(--dm) !important;
+  font-weight: 700;
+  filter: blur(0) !important;
 }
-.chips span:active{
-  color:#fff;
-  transform:translateY(-2px);
-  text-shadow:0 0 10px rgba(255,255,255,.75), 0 0 22px rgba(255,255,255,.4);
-}
-.chips span:active::before{
-  color:rgba(255,255,255,.4);
+.infinity-mask {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    linear-gradient(90deg, rgba(6,6,7,0) 0%, transparent 25%, transparent 75%, rgba(6,6,7,0) 100%),
+    linear-gradient(180deg, rgba(6,6,7,0) 0%, transparent 20%, transparent 80%, rgba(6,6,7,0) 100%);
+  z-index: 5;
 }
 
 .rule-text{
@@ -1047,7 +1050,6 @@ a{color:inherit;text-decoration:none;}
   z-index:1;
 }
 
-/* 左上角文案 */
 .surgery-text{
   position:relative;
   z-index:1;
@@ -1063,7 +1065,6 @@ a{color:inherit;text-decoration:none;}
   margin:0;
 }
 
-/* 右下角时间 */
 .surgery-time{
   position:relative;
   z-index:1;
@@ -1438,7 +1439,6 @@ a{color:inherit;text-decoration:none;}
   padding:22px 16px 16px;
   display:flex;flex-direction:column;gap:12px;
   -webkit-overflow-scrolling:touch;
-  scroll-behavior:smooth;
 }
 .msg-row{
   display:flex;
@@ -1455,9 +1455,9 @@ a{color:inherit;text-decoration:none;}
   width:fit-content;
   min-width:0;
   max-width:100%;
-  padding:10px 16px;
-  line-height:1.6;
-  font-size:13.5px;
+  padding:9px 15px;
+  line-height:1.4;
+  font-size:15px;
   letter-spacing:.04em;
   backdrop-filter:blur(6px) saturate(130%);
   -webkit-backdrop-filter:blur(6px) saturate(130%);
@@ -1502,9 +1502,8 @@ a{color:inherit;text-decoration:none;}
   display:flex;
   align-items:center;
   gap:10px;
-  /* 高度缩小 */
-  padding:6px 12px;
-  padding-bottom:calc(8px + env(safe-area-inset-bottom, 0px));
+  padding:8px 12px;
+  padding-bottom:calc(10px + env(safe-area-inset-bottom, 0px));
   border-top:1px solid rgba(255,255,255,.07);
   background:rgba(6,6,7,.8);
   backdrop-filter:blur(22px);
@@ -1514,16 +1513,14 @@ a{color:inherit;text-decoration:none;}
 }
 .chat-input-fake{
   flex:1;
-  /* 输入框高度变小 */
-  height:38px;
+  height:40px;
   display:flex;
   align-items:center;
   padding:0 18px;
-  /* 圆角跟着高度改 */
-  border-radius:19px;
+  border-radius:20px;
   background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.08);
-  font-size:13.5px;
+  font-size:15px;
   color:rgba(242,240,237,.95);
   letter-spacing:.02em;
   cursor:default;
@@ -1549,16 +1546,15 @@ a{color:inherit;text-decoration:none;}
 }
 .chat-send{
   min-width:56px;
-  /* 发送按钮高度变小 */
-  height:38px;
+  height:40px;
   padding:0 16px;
-  border-radius:19px;
+  border-radius:20px;
   display:flex;align-items:center;justify-content:center;
   flex:0 0 auto;
   background:rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.1);
   color:rgba(242,240,237,.55);
-  font-size:12.5px;
+  font-size:14px;
   font-weight:600;
   letter-spacing:.12em;
   transition:color .4s var(--ease), background .4s var(--ease),
@@ -1581,12 +1577,12 @@ a{color:inherit;text-decoration:none;}
   }
 }
 
-/* ===== iOS 风格假键盘 ===== */
+/* ===== iOS 风格键盘 ===== */
 .chat-fake-keyboard{
   flex:0 0 auto;
   height:0;
   overflow:hidden;
-  background:#2b2b2e; /* iOS 暗黑键盘底色 */
+  background:#2b2b2e; 
   border-top:1px solid rgba(0,0,0,.4);
   transition:height .42s cubic-bezier(.32,.72,0,1);
   position:relative;
@@ -1600,7 +1596,7 @@ a{color:inherit;text-decoration:none;}
   padding:8px 3px 12px;
   display:flex;
   flex-direction:column;
-  gap:12px; /* 行距 */
+  gap:12px; 
   box-sizing:border-box;
 }
 .kb-row{
@@ -1615,13 +1611,13 @@ a{color:inherit;text-decoration:none;}
 }
 .kb-row-bottom{
   padding:0 4px;
-  flex:0 0 42px; /* 底排稍微扁一点 */
+  flex:0 0 42px; 
   gap:6px;
 }
 .kb-key{
   flex:1;
   min-width:0;
-  background:#636366; /* iOS 暗黑键帽色 */
+  background:#636366; 
   border-radius:5px;
   display:flex;
   align-items:center;
@@ -1648,7 +1644,6 @@ a{color:inherit;text-decoration:none;}
   color:#fff;
   background:#636366;
 }
-/* 底排的功能键背景更暗一点 */
 .kb-row-bottom .kb-key{
   background:rgba(255,255,255,.1);
   box-shadow:none;
@@ -1666,7 +1661,7 @@ a{color:inherit;text-decoration:none;}
   .dock{padding:0 14px;}
   .dock-item{padding:14px 10px 16px;font-size:11px;}
   .chat-messages{padding:18px 12px 12px;}
-  .msg-bubble{font-size:13px;padding:9px 13px;}
+  .msg-bubble{font-size:14px;padding:8px 13px;}
   .mp-title{font-size:14px;}
   .moment-name{font-size:13px;}
   .moment-text{font-size:13px;}
@@ -1850,13 +1845,22 @@ a{color:inherit;text-decoration:none;}
     <section class="pane" id="pane-style">
       <div class="card">
         <div class="card-head"><span class="dot"></span>风格 <em class="en">· STYLE</em></div>
-        <div class="chips">
-          <span>逻辑</span><span>剖析</span><span>微文艺</span><span>温病</span>
-          <span>平权</span><span>伪下位</span><span>反骨</span>
+        
+        <div class="infinity-stage">
+          <div class="infinity-ring" id="ring">
+            <span>逻辑</span>
+            <span>剖析</span>
+            <span>微文艺</span>
+            <span>温病</span>
+            <span>平权</span>
+            <span>伪下位</span>
+            <span>反骨</span>
+            <span>微擦</span>
+            <span>诱导</span>
+          </div>
+          <div class="infinity-mask"></div>
         </div>
-        <div class="chips">
-          <span>微擦</span><span>诱导</span>
-        </div>
+        
       </div>
 
       <div class="verse with-bg">
@@ -2137,6 +2141,65 @@ a{color:inherit;text-decoration:none;}
   }
   updateClock();
   setInterval(updateClock, 1000);
+
+  /* ∞ 无限轮播 */
+  var ring = document.getElementById('ring');
+  if (ring) {
+    var items = Array.from(ring.children);
+    var total = items.length;
+    var angle = 0;
+    var speed = 0.003; 
+    var isHovered = false;
+    
+    var renderRing = function() {
+      if (!isHovered) {
+        angle += speed;
+      }
+
+      items.forEach(function(item, i) {
+        var itemAngle = angle + (i * (Math.PI * 2 / total));
+
+        var radiusX = 120; // X轴稍微收窄
+        var x = Math.sin(itemAngle) * radiusX;
+
+        var radiusY = 14; // 高度压扁
+        var y = Math.sin(itemAngle * 2) * radiusY;
+
+        var radiusZ = 40; 
+        var z = Math.cos(itemAngle) * radiusZ;
+
+        var zPercent = (z + radiusZ) / (radiusZ * 2); 
+        
+        var scale = 0.7 + (zPercent * 0.5);
+        var opacity = 0.4 + (zPercent * 0.6);
+        var zIndex = Math.floor(zPercent * 100);
+
+        var blurAmount = 0;
+        if (zPercent < 0.5) {
+          blurAmount = (0.5 - zPercent) * 2.5;
+        }
+
+        item.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, ' + z + 'px) scale(' + scale + ')';
+        item.style.opacity = opacity;
+        item.style.zIndex = zIndex;
+        
+        if (!item.matches(':hover')) {
+          item.style.filter = 'blur(' + blurAmount + 'px)';
+        }
+      });
+
+      requestAnimationFrame(renderRing);
+    };
+
+    ring.addEventListener('mouseenter', function(){ isHovered = true; });
+    ring.addEventListener('mouseleave', function(){ isHovered = false; });
+    items.forEach(function(item) {
+      item.addEventListener('mouseenter', function(){ isHovered = true; });
+      item.addEventListener('mouseleave', function(){ isHovered = false; });
+    });
+
+    requestAnimationFrame(renderRing);
+  }
 
   ['images/zybj.webp', 'images/touxiang.webp', 'images/image5.webp'].forEach(function(src){
     var img = new Image();
@@ -2457,12 +2520,9 @@ a{color:inherit;text-decoration:none;}
     var pane = document.getElementById('pane-' + id);
     if (pane) pane.classList.add('active');
 
-    /* ====== 改动了这里的跳转逻辑 ====== */
     if (id === 'links') {
-      // 点击 links 时回到页面最顶部
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // 其他页滚动到卡片区域
       var content = document.querySelector('.content');
       if (content) {
         window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
@@ -2543,9 +2603,15 @@ a{color:inherit;text-decoration:none;}
     if (themTimer) { clearTimeout(themTimer);  themTimer  = null; }
     if (stepTimer) { clearTimeout(stepTimer);  stepTimer  = null; }
   }
-  function scrollToBottom(){
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+  
+  function scrollToBottom(smooth) {
+    if (smooth) {
+      chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+    } else {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
   }
+
   function appendBubble(who){
     var row = document.createElement('div');
     row.className = 'msg-row ' + (who === 'me' ? 'outgoing' : 'incoming');
@@ -2557,7 +2623,7 @@ a{color:inherit;text-decoration:none;}
     row.appendChild(bubble);
     chatMessages.appendChild(row);
     requestAnimationFrame(function(){ row.classList.add('visible'); });
-    scrollToBottom();
+    scrollToBottom(false); 
     return { row: row, bubble: bubble, span: span };
   }
 
@@ -2601,11 +2667,11 @@ a{color:inherit;text-decoration:none;}
         if (i < line.length){
           span.textContent += line.charAt(i);
           i++;
-          scrollToBottom();
+          scrollToBottom(false); 
           themTimer = setTimeout(step, 22);
         } else {
           bubble.classList.remove('typing');
-          scrollToBottom();
+          scrollToBottom(false);
           lineIndex++;
           themTimer = setTimeout(typeNextLine, 240);
         }
@@ -2619,6 +2685,7 @@ a{color:inherit;text-decoration:none;}
     if (!chatView) return;
     chatView.classList.add('keyboard-open');
     keyboardOpen = true;
+    setTimeout(function(){ scrollToBottom(true); }, 420);
   }
   function closeFakeKeyboard(){
     if (!chatView) return;
@@ -2679,7 +2746,7 @@ a{color:inherit;text-decoration:none;}
     chatInput.classList.remove('typing');
 
     appendBubble('me').span.textContent = meText;
-    scrollToBottom();
+    scrollToBottom(true); 
 
     progress = thisIdx + 1;
 
