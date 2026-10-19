@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -10,6 +10,10 @@
 <link rel="icon" type="image/webp" href="images/touxiang.webp">
 <link rel="apple-touch-icon" href="images/touxiang.webp">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- 引入了加载更快的 Noto Serif TC 作为备用繁体字体 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chiron-sung-hk-webfont@1.0.24/css/vf.css">
 <title>羊 · YANG</title>
 <style>
@@ -21,8 +25,9 @@
   --ink-2:#8C8983;
   --ink-3:#4E4C48;
   --ease:cubic-bezier(.34,1.56,.64,1);
-  --serif:"Chiron Sung HK WS", "Source Han Serif SC", "Songti SC", "STSong", serif;
-  --serif-tc:"Chiron Sung HK WS", "Source Han Serif TC", "Songti TC", "Songti SC", "STSong", serif;
+  /* 优化了字体栈：优先使用香港宋体，没加载出来时优先用系统繁体字(TC)或Noto Serif TC，避免先出简体 */
+  --serif:"Chiron Sung HK WS", "Noto Serif TC", "PingFang TC", "Source Han Serif TC", "Songti TC", "STSong", serif;
+  --serif-tc:"Chiron Sung HK WS", "Noto Serif TC", "PingFang TC", "Source Han Serif TC", "Songti TC", "STSong", serif;
   --glass-bg:rgba(12,12,16,.46);
   --glass-bg-2:rgba(14,14,18,.62);
   --glass-border:rgba(255,255,255,.09);
@@ -1017,7 +1022,7 @@ a{color:inherit;text-decoration:none;}
 }
 .verse p + p{margin-top:6px;}
 
-/* ===== 手术刀文案框（新排版：左图、右下动态时间） ===== */
+/* ===== 手术刀文案框 ===== */
 .surgery-card{
   position:relative;
   display:flex;
@@ -1031,7 +1036,6 @@ a{color:inherit;text-decoration:none;}
   overflow:hidden;
   isolation:isolate;
   
-  /* 遮罩变透，显示 image5 底图 */
   background:
     linear-gradient(180deg, rgba(6,6,7,.35) 0%, rgba(6,6,7,.50) 100%),
     url('images/image5.webp') center / cover no-repeat;
@@ -1049,7 +1053,7 @@ a{color:inherit;text-decoration:none;}
 .surgery-text{
   position:relative;
   z-index:1;
-  font-family: var(--serif-tc); /* 字体设定：清冷宋体 */
+  font-family: var(--serif-tc);
   font-size:13.5px;
   line-height:1.9;
   letter-spacing:.12em;
@@ -1075,10 +1079,8 @@ a{color:inherit;text-decoration:none;}
   display:flex;
   align-items:center;
   gap:4px;
-  /* 保证数字等宽，秒数跳动时框不抽搐 */
   font-variant-numeric: tabular-nums; 
 }
-/* 秒数红色 */
 .surgery-time .red-time{
   color:var(--dm);
   font-weight:700;
@@ -1513,7 +1515,7 @@ a{color:inherit;text-decoration:none;}
 }
 .chat-input-fake{
   flex:1;
-  height:44px;
+  height:38px;
   display:flex;
   align-items:center;
   padding:0 18px;
@@ -1546,7 +1548,7 @@ a{color:inherit;text-decoration:none;}
 }
 .chat-send{
   min-width:56px;
-  height:44px;
+  height:38px;
   padding:0 16px;
   border-radius:22px;
   display:flex;align-items:center;justify-content:center;
@@ -1587,30 +1589,31 @@ a{color:inherit;text-decoration:none;}
   position:relative;
   z-index:1;
 }
+/* ===== 调整了键盘高度：从 280px 缩到 220px ===== */
 .chat-view.keyboard-open .chat-fake-keyboard{
-  height:280px;
+  height:220px;
 }
 .chat-fake-keyboard-inner{
-  height:280px;
-  padding:10px 3px 10px;
+  height:220px;
+  padding:8px 3px;
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:6px;
   box-sizing:border-box;
 }
 .kb-row{
   display:flex;
-  gap:6px;
+  gap:5px;
   justify-content:center;
   flex:1;
   min-height:0;
 }
 .kb-row-mid{
-  padding:0 18px;
+  padding:0 16px;
 }
 .kb-row-bottom{
   padding:0 4px;
-  flex:0 0 46px;
+  flex:0 0 36px; /* 底部那排稍微压扁 */
 }
 .kb-key{
   flex:1;
@@ -1620,14 +1623,14 @@ a{color:inherit;text-decoration:none;}
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:18px;
+  font-size:16px; /* 字号也稍微调小一点 */
   font-weight:400;
   color:#fff;
   font-family:-apple-system,"SF Pro Text","PingFang SC",sans-serif;
   user-select:none;
   -webkit-user-select:none;
 }
-.kb-key.kb-wide{flex:1.5;font-size:14px;}
+.kb-key.kb-wide{flex:1.5;font-size:13px;}
 .kb-key.kb-space{
   flex:5;
   font-size:12px;
@@ -1825,7 +1828,6 @@ a{color:inherit;text-decoration:none;}
       </div>
     </section>
 
-    <!-- style 页：风格卡 → verse → 心电图 -->
     <section class="pane" id="pane-style">
       <div class="card">
         <div class="card-head"><span class="dot"></span>风格 <em class="en">· STYLE</em></div>
@@ -1864,7 +1866,6 @@ a{color:inherit;text-decoration:none;}
                            L 62 50
                            L 66 45 L 80 55 L 84 50
                            L 100 50
-
                            L 126 50
                            L 130 46 L 133 54 L 138 50
                            L 146 50
@@ -1872,7 +1873,6 @@ a{color:inherit;text-decoration:none;}
                            L 160 50
                            L 164 45 L 178 55 L 182 50
                            L 190 50
-
                            L 216 50
                            L 220 46 L 223 54 L 228 50
                            L 238 50
@@ -1880,14 +1880,12 @@ a{color:inherit;text-decoration:none;}
                            L 252 50
                            L 256 45 L 270 55 L 274 50
                            L 290 50
-
                            L 300 50
                            L 302 52
                            L 304 42 L 306 28 L 308 22 L 310 22 L 312 78 L 314 56 L 316 52
                            L 318 50
                            L 322 46 L 334 54 L 340 50
                            L 380 50
-
                            L 400 50
                            L 404 46 L 407 54 L 412 50
                            L 420 50
@@ -1895,7 +1893,6 @@ a{color:inherit;text-decoration:none;}
                            L 434 50
                            L 438 45 L 452 55 L 456 50
                            L 490 50
-
                            L 516 50
                            L 520 46 L 523 54 L 528 50
                            L 536 50
@@ -1903,7 +1900,6 @@ a{color:inherit;text-decoration:none;}
                            L 550 50
                            L 554 45 L 568 55 L 572 50
                            L 606 50
-
                            L 632 50
                            L 636 46 L 639 54 L 644 50
                            L 654 50
@@ -1911,7 +1907,6 @@ a{color:inherit;text-decoration:none;}
                            L 668 50
                            L 672 45 L 686 55 L 690 50
                            L 726 50
-
                            L 752 50
                            L 756 46 L 759 54 L 764 50
                            L 772 50
@@ -1919,14 +1914,12 @@ a{color:inherit;text-decoration:none;}
                            L 786 50
                            L 790 45 L 804 55 L 808 50
                            L 840 50
-
                            L 850 50
                            L 852 52
                            L 854 42 L 856 30 L 858 26 L 860 26 L 862 74 L 864 54 L 866 52
                            L 870 50
                            L 874 46 L 886 54 L 890 50
                            L 950 50
-
                            L 966 50
                            L 970 46 L 973 54 L 978 50
                            L 986 50
@@ -1934,7 +1927,6 @@ a{color:inherit;text-decoration:none;}
                            L 1000 50
                            L 1004 45 L 1018 55 L 1022 50
                            L 1056 50
-
                            L 1082 50
                            L 1086 46 L 1089 54 L 1094 50
                            L 1104 50
@@ -1942,7 +1934,6 @@ a{color:inherit;text-decoration:none;}
                            L 1118 50
                            L 1122 45 L 1136 55 L 1140 50
                            L 1176 50
-
                            L 1200 50
                            L 1204 46 L 1207 54 L 1212 50
                            L 1220 50
@@ -1950,7 +1941,6 @@ a{color:inherit;text-decoration:none;}
                            L 1234 50
                            L 1238 45 L 1252 55 L 1256 50
                            L 1296 50
-
                            L 1322 50
                            L 1326 46 L 1329 54 L 1334 50
                            L 1340 50
@@ -1976,7 +1966,6 @@ a{color:inherit;text-decoration:none;}
       </div>
     </section>
 
-    <!-- terms 页：须知卡 → 手术刀框 -->
     <section class="pane" id="pane-rules">
       <div class="card">
         <div class="card-head"><span class="dot"></span>须知 <em class="en">· TERMS</em></div>
@@ -1992,16 +1981,12 @@ a{color:inherit;text-decoration:none;}
         <p class="rule-foot">仅为线上虚拟角色扮演娱乐，无现实情感导向，不涉及心理诊疗及现实引导。</p>
       </div>
 
-      <!-- 手术刀框 -->
       <div class="surgery-card">
-        <!-- 左上角文案 -->
         <div class="surgery-text">
           <p>我有一把手术刀，从不是为了割裂爱意，</p>
           <p>而是剖开感情表层混沌的情绪，</p>
           <p>直视底下真实的执念、恐惧与渴望。</p>
         </div>
-
-        <!-- 右下角日期与跳动时间 -->
         <div class="surgery-time" id="clock">
           2026-10-19 12:00<span class="red-time">:00</span>
         </div>
@@ -2118,11 +2103,10 @@ a{color:inherit;text-decoration:none;}
   var $$ = function(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); };
   var vib = function(ms){ try{ navigator.vibrate(ms); }catch(e){} };
 
-  /* ============ 右下角实时时间跳动 ============ */
+  /* 实时时间跳动 */
   function updateClock() {
     var el = document.getElementById('clock');
     if (!el) return;
-    
     var now = new Date();
     var y = now.getFullYear();
     var m = String(now.getMonth() + 1).padStart(2, '0');
@@ -2130,8 +2114,6 @@ a{color:inherit;text-decoration:none;}
     var h = String(now.getHours()).padStart(2, '0');
     var min = String(now.getMinutes()).padStart(2, '0');
     var sec = String(now.getSeconds()).padStart(2, '0');
-    
-    // 只有冒号后面的秒数（甚至包括冒号）是红色的
     el.innerHTML = y + '-' + m + '-' + d + ' ' + h + ':' + min + '<span class="red-time">:' + sec + '</span>';
   }
   updateClock();
@@ -2306,7 +2288,10 @@ a{color:inherit;text-decoration:none;}
       var pushY = Math.sin(angle) * dist + vertBias;
       var rotate = (Math.random() - 0.5) * 40;
       var scale = 0.7 + Math.random() * 0.7;
-      var dur = 0.40 + Math.random() * 0.25;
+      
+      /* ===== 改动这里：羽毛爆开速度变慢 ===== */
+      var dur = 0.65 + Math.random() * 0.35; // 原来是 0.40 + 0.25
+      
       var delay = Math.random() * 0.02;
 
       feather.style.animation = 'none';
@@ -2328,7 +2313,6 @@ a{color:inherit;text-decoration:none;}
     playMusic();
     vib([24,40,32]);
 
-    // 日志图切换延时
     setTimeout(function () {
       if (logBox) {
         logBox.classList.add('switched');
@@ -2454,7 +2438,6 @@ a{color:inherit;text-decoration:none;}
     var pane = document.getElementById('pane-' + id);
     if (pane) pane.classList.add('active');
 
-    // 滚动置顶效果
     var content = document.querySelector('.content');
     if (content) {
       window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
